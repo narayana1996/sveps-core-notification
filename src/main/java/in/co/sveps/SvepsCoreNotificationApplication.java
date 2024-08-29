@@ -1,4 +1,4 @@
-package in.co.sveps.sveps_core_notification;
+package in.co.sveps;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

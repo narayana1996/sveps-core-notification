@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container bg-light">
+ <div th:replace="fragments/header::header('newProj')"></div>
+     <div class="card" > 
+     </div>
+    <div class="row" >
+    
+        <div class="card bg-secondary my-2">
+            <div class="card-header">
+               <h1 class="m-0 text-white">Project List 
+                             
+                </h1>             
+              <a class="btn btn-primary" role="button"  href="/project/new"> Add Project</a>
+                </div>
+        
+            <div class="card-body">
+                <table class="table table-striped bg-light">
+                    <thead>
+                    <tr>
+                        <th>Project Id</th>
+                        <th>Project Name</th>
+                        <th>Project  Description</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                         <th>Project Manger</th>
+                         <th>Team Lead </th>
+                         <th>Number of Tasks</th>
+                       
+
+                   
+                    </tr>
+                </thead>
+                    <tbody>
+
+                    <tr th:each="project : ${projectss}">
+                        <td ><a th:text="${project.id}" th:href="${'/project/' + project.id}">Project Id</a></td>
+
+                        <td th:text="${project.projectName}">Project Name</td>
+                        <td th:text="${project.projectDescription}">Project  Description</td>
+                        <td th:text="${project.startDate}">Start Date</td>
+                        <td th:text="${project.endDate}">End Date</td>
+                         <td ><a th:text="${project.managerId.firstName}" th:href="${'/employee/' + project.managerId.id}">Project Id</a></td>
+                          <td ><a th:text="${project.leadId.firstName}" th:href="${'/employee/' +project.leadId.id}">Project Id</a></td>
+                         <td th:text="${#lists.size(project.task)}"></td>
+                        
+                       <!-- <td><a  th:unless="${#strings.equals(#authentication?.principal.roleName, 'EMPOYEE')}"  th:href="${'/project/' + project.id}">Add / Update Employee in Project </a></td>
+                        <td><a  th:unless="${#strings.equals(#authentication?.principal.roleName, 'EMPOYEE')}" th:href="${'/project/edit/' + project.id}">Edit</a></td> -->
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    </div>
+</div>
+</body>
+</html>

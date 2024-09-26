@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container bg-light">
+ <div th:replace="fragments/header::header('newAppraisa')"></div>
+ <div th:replace="fragments/appraisalForm"></div>
+           
+   
+    <div class="row" >
+ 
+        <div class="card bg-secondary my-2">
+            <div class="card-header">
+               <h1 class="m-0 text-white">List of Appraisals
+                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_Apprials_model">
+ new Appraisal Request
+</button>   
+
+  
+
+                </h1>
+                
+            </div>
+        
+            <div class="card-body">
+                <table class="table table-striped bg-light">
+                    <thead>
+                    <tr>
+                        <th>Appraisal reqest Id</th> 
+                        <th>Name</th>  
+                        <th>Manager Name</th>                      
+                        <th>Goal</th>
+                        
+                         <th>Tasks Assigned</th>
+                          <th>Tasks Completed</th>
+                        <th>Avergae of Task Rating</th>
+                        <th>Appraisal Feedback</th>
+                            <th>Status</th>
+                        <th>Appraisal Rating</th>
+                   
+                    </tr>
+                </thead>
+                    <tbody>
+
+                            <tr th:each="appraisal : ${appraisals}">
+                        <td><a th:text="${appraisal.id}"  th:href="${'/appraisal/' + appraisal.id}"> Id</a></td>
+                        <td th:text="${appraisal?.employee?.firstName}">name</td>
+                         <td th:text="${appraisal?.reportingManager?.firstName}">name</td>
+                         <td th:text="${appraisal?.goal}">goal</td>
+                        
+                        <td th:text="${allTasks}">task</td>
+                        <td th:text="${tasksCompleted}">task</td>
+                         <td th:text="${ratingAverage}">Avergae</td>
+                          <td th:text="${appraisal?.status.status}">Status</td>
+                       <td th:text="${appraisal?.feedback}">feedback</td>
+                   <td th:text="${appraisal?.rating}">rating</td>
+                        
+
+                  </tr> 
+                  
+
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    
+            <div class="card bg-secondary my-2">
+            <div class="card-header">
+               <h1 class="m-0 text-white">Feedback Requried for Appraisals    </h1>
+                
+            </div>
+        
+            <div class="card-body">
+                <table class="table table-striped bg-light">
+                    <thead>
+                    <tr>
+                        <th>Appraisal reqest Id</th> 
+                        <th>Name</th>  
+                        <th>Manager Name</th>                      
+                        <th>Goal</th>
+ <th>Status</th>
+                        <th>Appraisal Feedback</th>
+                        <th>Appraisal Rating</th>
+                   
+                    </tr>
+                </thead>
+                    <tbody>
+                            <tr th:each="appraisal : ${pendingAppraisalsAtManager}">
+                        <td><a th:text="${appraisal.id}"  th:href="${'/appraisal/' + appraisal.id}"> Id</a></td>
+                        <td th:text="${appraisal?.employee?.firstName}">name</td>
+                         <td th:text="${appraisal?.reportingManager?.firstName}">name</td>
+                         <td th:text="${appraisal?.goal}">goal</td>
+                    <td th:text="${appraisal?.status.status}">Status</td>
+                       <td th:text="${appraisal?.feedback}">feedback</td>
+                   <td th:text="${appraisal?.rating}">rating</td>
+                        
+
+                  </tr> 
+                  
+
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    </div>
+</div>
+</body>
+</html>

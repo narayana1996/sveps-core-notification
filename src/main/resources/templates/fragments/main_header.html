@@ -1,0 +1,42 @@
+<head th:fragment="main_header">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Raleway:400,300,600" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css" />
+    <link rel="stylesheet"  th:href="@{/css/bootstrap.min.css}" />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <script th:src="@{/js/bootstrap.bundle.min.js}" ></script>
+
+    <title>SVEPS</title>
+        <style>
+        .star-container {
+            display: inline-block;
+        }
+
+        .fa-star {
+            color: gold;  /* Adjust the color as needed */
+        }
+        
+           .error-message {
+        color: red;
+    }
+    </style>
+    <script>
+    
+    var exampleModal = document.getElementById('create_submitAppraisalReview_model')
+exampleModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  var recipient = button.getAttribute('data-bs-appReqId')
+ 
+  var modalBodyInput = exampleModal.querySelector('#appraisalApprovalId');
+
+  
+  modalBodyInput.value = recipient
+})
+    
+    
+    
+    </script>
+
+</head>

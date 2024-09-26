@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container bg-light">
+ <div th:replace="fragments/header::header('newTask')"></div>
+  <div th:replace="fragments/newTask"></div>
+    <div class="row" >
+    
+
+
+
+        <div class="card bg-secondary my-2">
+            <div class="card-header">
+               <h1 class="m-0 text-white">Tasks Assigned to You 
+                             
+                </h1>             
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_story_model">
+ Create Task
+</button>
+                </div>
+        
+            <div class="card-body">
+                <table class="table table-striped bg-light">
+                    <thead>
+                    <tr>
+                        <th>Task Id</th>
+                        <th>Task Name</th>
+                        <th>Project</th>
+                        <th>Task Hours</th>
+                        <th>completed  Hours</th>
+                        <th>Task Status</th>
+                        <th>Task Rating</th>
+                        <th>Review Components</th>
+                   
+                    </tr>
+                </thead>
+                    <tbody>
+
+                    <tr th:each="taskIn : ${tasks}">
+                        <td ><a th:text="${taskIn.id}" th:href="${'/tasks/' + taskIn.id}">Sprint Id</a></td>
+                        <td th:text="${taskIn.title}">name</td>
+                             <td ><a th:text="${taskIn.project.projectName}" th:href="${'/project/' + taskIn.project.id}">manager<a></td >
+                              <td th:text="${taskIn.hoursRequired}">Numeber of Employes</td>
+                        
+                          <td th:text="${taskIn.hoursTook}">Sprint Hours</td>
+                                 <td th:text="${taskIn.status.status}">Sprint Hours</td>
+                                           <td th:text="${taskIn.rating}">Sprint Hours</td>
+                                             <td th:text="${taskIn.leadReviewComments}">Sprint Hours</td>
+                                  </tr> 
+
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    </div>
+    <div class="row"></div>
+        <div class="row"  >
+ <div class="card bg-secondary my-2">
+            <div class="card-header">
+               <h1 class="m-0 text-white">Total Tasks 
+                             
+                </h1>             
+
+                </div>
+        
+            <div class="card-body">
+                <table class="table table-striped bg-light">
+                    <thead>
+                    <tr>
+                        <th>Task Id</th>
+                        <th>Task Name</th>
+                        <th>Project</th>
+                         <th>Assign to</th>
+                        <th>Task Hours</th>
+                        <th>completed  Hours</th>
+                        <th>Task Status</th>
+                        <th>Task Rating</th>
+                        <th>Review Components</th>
+                   
+                    </tr>
+                </thead>
+                    <tbody>
+
+                    <tr th:each="taskIn : ${allTasks}">
+                        <td ><a th:text="${taskIn.id}" th:href="${'/tasks/' + taskIn.id}"></a></td>
+                        <td th:text="${taskIn.title}">name</td>
+                             <td ><a th:text="${taskIn.project.projectName}" th:href="${'/project/' + taskIn.project.id}">manager<a></td >
+                             <td ><a th:text="${taskIn.assignedEmployee.firstName}" th:href="${'/employee/' + taskIn.assignedEmployee.id}">manager<a></td >
+                              <td th:text="${taskIn.hoursRequired}">Number of Employes</td>
+                        
+                          <td th:text="${taskIn.hoursTook}">Sprint Hours</td>
+                                 <td th:text="${taskIn.status.status}">Sprint Hours</td>
+                                           <td th:text="${taskIn.rating}">Sprint Hours</td>
+                                             <td th:text="${taskIn.leadReviewComments}">Sprint Hours</td>
+                                  </tr> 
+
+                    </tbody>
+                </table>
+            </div>
+    </div>
+        </div>
+</div>
+</body>
+</html>

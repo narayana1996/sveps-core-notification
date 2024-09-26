@@ -1,0 +1,14 @@
+
+
+<!--<div th:replace="fragments/newSprint"></div> -->
+<div th:replace="fragments/newTask"></div>
+<div>
+                 <a class="btn btn-primary" role="button"  th:unless="${#strings.equals(#authentication?.principal.accessName, 'EMPOYEE')}"  href="/project/new"> Add Project</a>
+   <!--  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_sprint_model">
+ Create Sprint
+</button> -->
+               
+               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_story_model">
+ Create Task
+</button>
+                 </div>

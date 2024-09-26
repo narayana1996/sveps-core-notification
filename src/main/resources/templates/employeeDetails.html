@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Details</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container bg-light">
+  <h1 class="my-4">Employee Details</h1>
+
+  <h3>Details for <span th:text="${employee.firstName} + ' ' + ${employee.lastName}"></span></h3>
+
+  <form th:action="@{/employees/update(id=${employee.id})}" method="post">
+    <div class="form-group">
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" name="firstName" class="form-control" th:value="${employee.firstName}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName" class="form-control" th:value="${employee.lastName}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" class="form-control" th:value="${employee.email}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="text" id="phone" name="phone" class="form-control" th:value="${employee.phone}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="groups">Groups:</label>
+      <div th:if="${#lists.isEmpty(employee.groups)}" class="form-control-plaintext text-muted">
+        <span>No groups assigned.</span>
+      </div>
+      <div th:unless="${#lists.isEmpty(employee.groups)}" id="groups" class="form-control-plaintext">
+        <ul class="list-unstyled" th:each="groupName : ${employee.groups}">
+          <li th:text="${groupName}"></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="newGroup">Add New Group:</label>
+      <select id="newGroup" name="newGroup" class="form-control">
+        <option value="" disabled selected>Select a group</option>
+        <option th:each="group : ${groups}"
+                th:value="${group.id}"
+                th:text="${group.name}"></option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Update</button>
+    <a th:href="@{/employees}" class="btn btn-secondary">Back to Employee List</a>
+  </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container bg-light">
+ <div th:replace="fragments/header::header('Home')"></div>
+ 
+    <div class="row" >
+    
+
+
+
+        <div class="card bg-secondary my-2">
+            <div class="card-header">
+               <h1 class="m-0 text-white">Sprints 
+                             
+                </h1>             
+                <div th:replace="fragments/buttons"></div>
+                </div>
+        
+            <div class="card-body">
+                <table class="table table-striped bg-light">
+                    <thead>
+                    <tr>
+                        <th>Sprint Id</th>
+                        <th>Sprint Name</th>
+                        <th>Project</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Number of Stories</th>
+                        <th>Numeber of Employes</th>
+                        <th>Sprint Hours</th>
+                   
+                    </tr>
+                </thead>
+                    <tbody>
+
+                    <tr th:each="sprint : ${sprints}">
+                        <td ><a th:text="${sprint.id}" th:href="${'/sprints/' + sprint.id}">Sprint Id</a></td>
+                        <td th:text="${sprint.name}">name</td>
+                             <td ><a th:text="${sprint.project.id}" th:href="${'/project/' + sprint.id}">manager<a></td >
+                        <td th:text="${sprint.startDate}">Start Date</td>
+                        <td th:text="${sprint.endDate}">End Date</td>
+                        <td th:text="${#lists.size(sprint.tasks)}"></td>
+                  
+                        
+                                <td th:text="${sprint.numberOfEmployess}">Numeber of Employes</td>
+                        
+                          <td th:text="${sprint.numberOfHours}">Sprint Hours</td>
+                                  </tr> 
+
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    </div>
+    <div class="row"></div>
+        <div class="row" th:if="${param.id != null}" >
+         <div class="card bg-dark my-2">
+                    <div class="card-header">
+                      <h3 class="m-0 text-white" style="text-align: center" th:text="${selectedSprint.id} +' | '+${selectedSprint.name}"></h3>  
+                    
+                
+                  
+                </div>
+        
+                    <div class="card-body">
+                <table class="table table-striped bg-light">
+                    <thead>
+                    <tr>
+                        <th>Story Id</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Assigned to</th>
+                        <th>Hours Requried</th>                        
+                        <th>Status</th>
+                        
+                   
+                    </tr>
+                </thead>
+                    <tbody>
+
+                    <tr th:each="task : ${selectedSprint.tasks}">
+                        <td ><a th:text="${task.id}" th:href="${'/project/' + sprint.id}">Sprint Id</a></td>
+                        <td th:text="${task.title}">title</td>
+                         <td th:text="${task.description}">description</td>
+                         <td th:text="${task.assignedEmployee.firstName}">fullName</td>
+                          <td th:text="${task.hoursRequried}">fullName</td>
+                                <td th:text="${task.status}">status</td> 
+
+                                  </tr> 
+
+                    </tbody>
+                </table>
+            </div>
+         </div>
+        </div>
+</div>
+</body>
+</html>

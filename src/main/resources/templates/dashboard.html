@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container bg-light">
+ <div th:replace="fragments/header::header('Home')"></div>
+  
+
+        <div class="d-flex justify-content-evenly">
+            <div class="card bg-light my-2"  style="width: 550px;">
+        <div class="card-header">
+               <h4 class="m-0">User Info</h4>
+                         
+            </div>
+                <div class="card-body">
+                 <div class="row ">
+                    <div class="col">
+                    
+                     <label class="fw-bold">Id:</label>
+                        <span sec:authentication="principal.id"></span>
+                           
+                    </div>
+                        <div class="col">
+                    
+                     <label class="fw-bold">Name:</label>
+                        <span class="text-start" sec:authentication="principal.fullName"></span>
+                         
+                    </div>
+                    
+                    </div>
+                       <br/>
+                   <div class="row  align-self-center">
+                   
+
+                    
+                                       
+                    </div>
+                       <br/>
+                     <div class="row ">
+                                             <div class="col">
+                    
+                     <label class="fw-bold">email:</label>
+                        <span sec:authentication="principal.email"></span>
+                         
+                    </div>
+                    <div class="col">
+
+                        <label class="fw-bold">Reporting to me  :</label> </span>
+                       
+                    </div>
+
+                    </div>
+                    <br/>
+                       
+                    </div>
+                    
+                   
+                </div>
+ 
+            
+                       <div class="card bg-light my-2 " style="width: 400px;">
+            <div class="card-header">
+               <h4 class="m-0">My Tasks Info</h4>
+                         
+            </div>
+         
+                <div class="card-body">
+                 <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Tasks :</label>
+                 <!--      <span th:text="${my_taskSize}"></span>-->
+                    </div>
+                 <div class="col">
+                         <label class="fw-bold">Tasks Completed :</label>
+                      <!--   <span th:text="${#lists.size(DONE_forLogedInUser)}"></span>-->
+                    </div>
+                   
+                    </div>
+                    <br/>
+                 <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Tasks in Progress :</label>
+                      <!--  <span th:text="${#lists.size(IN_PROGRESS_forLogedInUser)}"></span>-->
+                       
+                    </div>
+
+                 <div class="col">
+                      <label class="fw-bold">Tasks in Review :</label>
+                <!--      <span th:text="${#lists.size(READY_FOR_REVIEW_forLogedInUser)}"></span>-->
+                    </div>
+                   
+                    </div>
+                    <br/>
+                                     <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Tasks in TO DO :</label>
+                       <!-- <span th:text="${#lists.size(TO_DO_forLogedInUser)}"></span>-->
+                       
+                    </div>
+                    
+                                        <div class="col">
+                        <label class="fw-bold">Tasks in Dev :</label>
+                      <!--  <span th:text="${#lists.size(DEV_COMPLETED_forLogedInUser)}"></span>-->
+                       
+                    </div>
+                    </div>
+                     <br/>
+                     <div class="row">
+                     <div class="col">
+                     <i class="fas fa-star"></i>
+                     <i class="fas fa-star"></i> 
+                     <i class="fas fa-star"></i> 
+                     <i class="fas fa-star"></i>
+                     <i class="fas fa-star"></i> 
+               <!--     (<span th:text="${groupByRating_forLogedInUser_5}"></span>)-->
+                     </div>
+                    </div>
+                   
+                  <div class="row">
+                  <div class="col">
+                     <i class="fas fa-star"></i>
+                     <i class="fas fa-star"></i> 
+                     <i class="fas fa-star"></i> 
+                     <i class="fas fa-star"></i>
+                     <i class="far fa-star"></i> 
+                     <!--(<span th:text="${groupByRating_forLogedInUser_4}"></span>)-->
+                     </div>
+                    </div>
+                     <div class="row">
+                     <div class="col">
+                     <i class="fas fa-star"></i>
+                     <i class="fas fa-star"></i> 
+                     <i class="fas fa-star"></i> 
+                     <i class="far fa-star"></i>
+                     <i class="far fa-star"></i> 
+                   <!--  (<span th:text="${groupByRating_forLogedInUser_3}"></span>) -->
+                     </div>
+                    </div>
+                     <div class="row">
+                     <div class="col">
+                     <i class="fas fa-star"></i>
+                     <i class="fas fa-star"></i> 
+                     <i class="far fa-star"></i> 
+                     <i class="far fa-star"></i>
+                     <i class="far fa-star"></i> 
+                  <!--   (<span th:text="${groupByRating_forLogedInUser_2}"></span>)-->
+                    </div>
+                    
+                     <div class="row">
+                     <div class="col">
+                       
+                     <i class="fas fa-star"></i>
+                     <i class="far fa-star"></i> 
+                     <i class="far fa-star"></i> 
+                     <i class="far fa-star"></i>
+                     <i class="far fa-star"></i>  
+                     <!--(<span th:text="${groupByRating_forLogedInUser_1}"></span>)-->
+                     </div>
+                    </div>
+                   
+                </div>
+            </div>
+
+     </div> 
+     
+                 <div class="card bg-light my-2">
+        <div class="card-header">
+               <h4 class="m-0">Leaves DashBoard</h4>
+                         
+            </div>
+                <div class="card-body">
+                 <div class="row  align-self-center">
+                    <div class="col">
+                        <label class="fw-bold">Total Leaves  :</label> <!--<span th:text="${leavesRequestByLoggedIn}"></span>-->
+                       
+                    </div>
+    
+                   
+                    </div>
+                                        <br/>
+                  
+                   <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Approved  :</label> <span th:text="${APPROVED}"></span>
+                       
+                    </div>
+
+                    </div>
+                    <br/>
+                  
+                   <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Rejected  :</label> <!--<span th:text="${REJECTED}"></span>-->
+                       
+                    </div>
+
+                    </div>
+                       <br/>
+               <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Pending  :</label> <!--<span th:text="${PENDING}"></span>-->
+                       
+                    </div>
+
+                    </div>
+
+                       
+                    </div>
+                    
+                   
+                </div>
+</div>
+        <div class="d-flex justify-content-evenly">
+
+       
+            <div class="card bg-light my-2"  style="width: 400px;">
+            <div class="card-header">
+               <h4 class="m-0">Project DashBoard</h4>
+                         
+            </div>
+         
+                <div class="card-body">
+                 <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Projects under me  :</label><!-- <span th:text="${#lists.size(projectsUnderMe)}"></span>-->
+                       
+                    </div>
+
+                    </div>
+                       <br/>
+                 <div class="row">
+                 
+                    <div class="col">
+                        <label class="fw-bold">Projects :</label>
+                   <!--    <span th:text="${#lists.size(findAllProjects)}"></span>-->
+                    </div>
+                 <div class="col">
+                         <label class="fw-bold">Active :</label>
+                       <!--  <span th:text="${#lists.size(findActiveProjects)}"></span>-->
+                    </div>
+                   
+                    </div>
+                    <br/>
+                 <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Tasks :</label>   <!--<span th:text="${allTaskSize}"></span>-->
+                       
+                    </div>
+                 <div class="col">
+                      <label class="fw-bold">Active Tasks :</label>
+                     <!-- <span th:text="${allActiveTaskSize}"></span>-->
+                    </div>
+                   
+                    </div>
+                    
+      
+                   
+                </div>
+            </div>
+            
+                       <div class="card bg-light my-2 " style="width: 400px;">
+            <div class="card-header">
+               <h4 class="m-0">Task DashBoard</h4>
+                         
+            </div>
+         
+                <div class="card-body">
+                 <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Tasks :</label>
+                     <!--  <span th:text="${taskSize}"></span>-->
+                    </div>
+                 <div class="col">
+                         <label class="fw-bold">Tasks Completed :</label>
+                         <!--<span th:text="${#lists.size(DONE)}"></span>-->
+                    </div>
+                   
+                    </div>
+                    <br/>
+                 <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Tasks in Progress :</label>
+                      <!--  <span th:text="${#lists.size(IN_PROGRESS)}"></span>-->
+                       
+                    </div>
+
+                 <div class="col">
+                      <label class="fw-bold">Tasks in Review :</label>
+                     <!-- <span th:text="${#lists.size(READY_FOR_REVIEW)}"></span>-->
+                    </div>
+                   
+                    </div>
+                    <br/>
+                                     <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Tasks in TO DO :</label>
+                       <!-- <span th:text="${#lists.size(TO_DO)}"></span>-->
+                       
+                    </div>
+                    
+                                        <div class="col">
+                        <label class="fw-bold">Tasks in Dev :</label>
+                      <!--  <span th:text="${#lists.size(DEV_COMPLETED)}"></span>-->
+                       
+                    </div>
+                    </div>
+                     <br/>
+                     <div class="row">
+                     <div class="col">
+                     <i class="fas fa-star"></i>
+                     <i class="fas fa-star"></i> 
+                     <i class="fas fa-star"></i> 
+                     <i class="fas fa-star"></i>
+                     <i class="fas fa-star"></i> 
+                   <!-- (<span th:text="${groupByRating_5}"></span>)-->
+                     </div>
+                    </div>
+                   
+                  <div class="row">
+                  <div class="col">
+                     <i class="fas fa-star"></i>
+                     <i class="fas fa-star"></i> 
+                     <i class="fas fa-star"></i> 
+                     <i class="fas fa-star"></i>
+                     <i class="far fa-star"></i> 
+                    <!-- (<span th:text="${groupByRating_4}"></span>)-->
+                     </div>
+                    </div>
+                     <div class="row">
+                     <div class="col">
+                     <i class="fas fa-star"></i>
+                     <i class="fas fa-star"></i> 
+                     <i class="fas fa-star"></i> 
+                     <i class="far fa-star"></i>
+                     <i class="far fa-star"></i> 
+              <!--       (<span th:text="${groupByRating_3}"></span>) -->
+                     </div>
+                    </div>
+                     <div class="row">
+                     <div class="col">
+                     <i class="fas fa-star"></i>
+                     <i class="fas fa-star"></i> 
+                     <i class="far fa-star"></i> 
+                     <i class="far fa-star"></i>
+                     <i class="far fa-star"></i> 
+                  <!--   (<span th:text="${groupByRating_2}"></span>)-->
+                    </div>
+                    
+                     <div class="row">
+                     <div class="col">
+                       
+                     <i class="fas fa-star"></i>
+                     <i class="far fa-star"></i> 
+                     <i class="far fa-star"></i> 
+                     <i class="far fa-star"></i>
+                     <i class="far fa-star"></i>  
+                   <!--  (<span th:text="${groupByRating_1}"></span>)-->
+                     </div>
+                    </div>
+                   
+                </div>
+            </div>
+
+     </div> 
+</div>
+</body>
+</html>

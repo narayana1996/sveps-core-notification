@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container bg-light">
+  
+
+<div th:replace="fragments/header :: header('newEmp')"></div>
+    <div class="row">
+        <div class="d-flex justify-content-center">
+        <div class="card bg-light my-4" style="width: 600px;">
+            <div class="card-header">
+                <h3 class="m-0">Employee Form</h3>
+            </div>
+            <div class="card-body">
+                <form th:object="${employee}" th:action="@{/employee}" method="post">
+                    <input type="hidden" th:field="*{id}" class="form-control"/>
+                    
+                    <div class="form-group">
+                        <label class="form-label">First Name:  </label>
+                        <input type="text" th:field="*{firstName}" class="form-control" th:required="required"/>
+                        <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="error-message"></p>
+                    </div>
+                    <div class="form-group">
+                        <label  class="form-label">Last Name:</label>
+                        <input type="text" th:field="*{lastName}" class="form-control" th:required="required"/>
+                        <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="error-message"></p>
+                    </div>
+                    <div class="form-group">
+                        <label  class="form-label">Salary:</label>
+                        <input  type="text" th:field="*{salary}" class="form-control" th:required="required"/>
+                        <p th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}" class="error-message"></p>
+                    </div>
+                     <div class="form-group">
+                        <label  class="form-label">Email:</label>
+                        <input  type="email" th:field="*{email}" class="form-control" th:required="required"/>
+                        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="error-message"></p>
+                    </div>
+
+                                          <div class="form-group">
+                        <label  class="form-label">Phone:</label>
+                        <input  type="number" th:field="*{phone}" maxlength="15" pattern="[0-9]+" class="form-control" th:required="required"/>
+                        <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="error-message"></p>
+                    </div>
+                     <div class="form-group">
+                       <label  class="form-label">Reporting Manager:</label>
+                    <select id="manager" th:field="*{manager.id}" class="form-control"   th:required="required" >
+                    <option value="">select Reporting Manager</option>
+				     <option th:each="emp : ${managersAndAbove}"
+						th:value="${{emp.id}}"
+						th:text="${emp.firstName}"
+						 th:selected="${emp.id} == ${manager} ? true : false"
+						> 
+					</option>
+			        </select>
+			             <p th:if="${#fields.hasErrors('manager')}" th:errors="*{manager}" class="error-message"> </p>
+			        </div>
+			        
+			        <div class="form-group">
+                       <label  class="form-label"> Access:</label>
+                    <select id="accessLevel"  class="form-control"  th:field="*{accessLevel.id}" >
+                    <option value="">select</option>
+				     <option th:each="accessLevelIn : ${accessLevelforCurrent}"
+						th:value="${accessLevelIn.id}"
+						th:text="${accessLevelIn.name}"	 > 
+					</option>
+			        </select>
+			           <p th:if="${#fields.hasErrors('accessLevel')}" th:errors="*{accessLevel}" class="error-message"> </p>
+			        </div>
+ 			        
+			    <div class="form-group">
+                       <label  class="form-label">Designation:</label>
+                    <select id="designation" class="form-control"   th:field="*{designation.id}" th:required="required" >
+                    <option value="">select</option>
+				     <option th:each="designationIn : ${designationforCurrent}"
+						th:value="${designationIn.id}"
+						th:text="${designationIn.name}"	 > 
+					</option>
+	
+			        </select>
+			         <p th:if="${#fields.hasErrors('designation')}" th:errors="*{designation}" class="error-message"> </p>
+			     </div>
+	
+			         <div class="form-group">
+                        <label  class="form-label">Start Date :</label>
+                        <input  type="date"  th:field="*{startDate}"  class="form-control" th:required="required"/>
+                        <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="error-message"> </p>
+                    </div>
+                    
+
+			     
+
+                    
+
+                        <button type="submit" class="btn btn-success my-2 mx-auto text-center form-control">Submit</button>
+
+                </form>
+            </div>
+        </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+</html>

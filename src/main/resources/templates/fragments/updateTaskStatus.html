@@ -1,0 +1,38 @@
+<!-- Modal -->
+<div class="modal fade" id="update_task_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Task</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+                 <form th:object="${task}" th:action="@{/tasks/update_task}" method="post">
+                   <input type="hidden" th:field="*{id}" class="form-control"/>
+
+			     
+			      <div class="form-group">
+                       <label  class="form-label">Status:</label>
+                         <select id="status" th:field="*{status}" th:required="required">
+                 
+        <option th:each="taskStatus : ${T(com.asp.utils.TaskStatus).values()}" 
+        th:value="${taskStatus}" 
+        th:unless="${taskStatus == T(com.asp.utils.TaskStatus).DONE}"
+        th:text="${taskStatus.getStatus()}"></option>
+    </select>
+
+			     </div>
+			     
+			  <div class="form-group">
+                        <label  class="form-label">Hours Spent on Task:</label>
+                        <input  type="number"  th:field="*{hoursTook}"  class="form-control" th:required="required"/>
+                        <p th:if="${#fields.hasErrors('hoursTook')}" th:errors="*{hoursTook}"></p>
+                    </div>
+			      <button type="submit" class="btn btn-success my-2 mx-auto text-center">Update Status</button>
+
+                 </form>  
+      </div>
+
+    </div>
+  </div>
+</div>

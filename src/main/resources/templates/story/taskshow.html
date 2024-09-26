@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container">
+ <div th:replace="fragments/header :: header('newProj')"></div>
+<div class="row">
+        <div class="d-flex justify-content-left">
+            <div class="card bg-light my-4" style="width: 600px;">
+                <div class="card-header">
+                    <h3 class="m-0">Story Info</h3>
+
+                </div>
+                <div class="card-body">
+                 <div class="row  align-self-center">
+                    <div class="col">
+                        <label class="fw-bold">Story ID :</label>
+                        <span th:text="${story.id}"></span>
+                    </div>
+                 <div class="col">
+                         <label class="fw-bold">Sprint Title :</label><span th:text="${story.title}"></span>
+                    </div>
+                   
+                    </div>
+                    <br/>
+                  
+               <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Description: </label>
+                        <span th:text="${story.description}"></span>
+                    </div>
+               
+                    </div>
+                     <br/>
+                       <div class="row">
+                        <div class="col">
+                         <label  class="fw-bold">Project Id : </label><span  class="font-weight-bold" th:text="${story.sprint.project.id}"></span>
+                    </div>
+                       <div class="col">
+                         <label  class="fw-bold">Project Name : </label><span  class="font-weight-bold" th:text="${story.sprint.project.projectName}"></span>
+                    </div>
+                       </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col">
+                         <label  class="fw-bold">Manger : </label><span  class="font-weight-bold" th:text="${story.sprint.project.managerId.firstName}"></span>
+                    </div>
+                    <div class="col">
+                         <label  class="fw-bold">Lead : </label><span  class="font-weight-bold" th:text="${story.sprint.project.leadId.firstName}"></span>
+                    </div>
+                       </div>
+                        <br/>
+                       <div class="row">
+                        <div class="col">
+                         <label  class="fw-bold">Total Sprint Hours :</label><span  class="font-weight-bold" th:text="${story.hoursRequried}"></span>
+                    </div>
+
+                       </div>
+                       
+                    </div>
+                    
+                   
+                </div>
+                
+                            <div class="card bg-light my-5 mx-4" style="width: 600px;">
+                <div class="card-header">
+                    <h3 class="m-0">Update Story</h3>
+
+                </div>
+                <div class="card-body">
+                 <div class="row  align-self-center">
+                 <form th:object="${story}" th:action="@{/update_stories}" method="post">
+                   <input type="hidden" th:field="*{id}" class="form-control"/>
+                   <div class="form-group">
+                       <label  class="form-label">Resign to:</label>
+                    <select id="projectId"  class="form-control"  th:field="*{assignedEmployee.id}" th:required="required">
+                     <option value="">select</option>
+				     <option th:each="employee : ${employees}"
+						th:value="${{employee.id}}"
+						th:text="${employee.firstName}"
+						 th:selected="${employee.id == story.assignedEmployee.id}"
+						> 
+					</option>
+			        </select>
+			     </div>
+			     
+			      <div class="form-group">
+                       <label  class="form-label">Status:</label>
+                    <select id="status" th:field="*{status}" th:required="required">
+                     <option value="">select Designation</option>
+                      <option value="IN PROGRESS">IN PROGRESS</option>                      
+                      <option value="DEV COMPLTED">DEV COMPLTED</option>
+                      <option value="READY FOR QA">READY FOR QA</option>          
+                      <option value="DONE">DONE</option>                   
+			        </select>
+			     </div>
+			      <button type="submit" class="btn btn-success my-2 mx-auto text-center">Submit</button>
+
+                 </form>               
+                   
+                    </div>
+                    
+                       
+                    </div>
+                  
+                </div>
+            </div>
+            
+
+            
+            
+
+        </div>
+
+</body>
+</html>

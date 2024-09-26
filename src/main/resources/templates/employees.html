@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/main_header">
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Employee Management</title>-->
+<!--  &lt;!&ndash; Add Bootstrap CSS &ndash;&gt;-->
+<!--  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
+</head>
+<body>
+
+<div class="container bg-light">
+  <h1 class="my-4">Employee Management</h1>
+
+
+  <!-- Employee List -->
+  <div class="card">
+    <div class="card-header">
+      <h3>Employee List</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employeePage.content}">
+          <td th:text="${employee.firstName}"></td>
+          <td th:text="${employee.lastName}"></td>
+          <td th:text="${employee.email}"></td>
+          <td th:text="${employee.phone}"></td>
+          <td>
+            <a th:href="@{/employees/{id}(id=${employee.id})}" class="btn btn-warning">Grant Access/Edit</a>
+            <a th:href="@{/employee/delete/{id}(id=${employee.id})}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+            <a th:href="@{/}" class="btn btn-success">Dashboard</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination Controls -->
+      <div class="pagination">
+                <span th:if="${currentPage > 0}">
+                    <a class="btn btn-secondary" th:href="@{/employees(page=${currentPage - 1}, size=${employeePage.size})}">Previous</a>
+                </span>
+        <span th:if="${currentPage < totalPages - 1}">
+                    <a class="btn btn-secondary" th:href="@{/employees(page=${currentPage + 1}, size=${employeePage.size})}">Next</a>
+                </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Bootstrap JS -->
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

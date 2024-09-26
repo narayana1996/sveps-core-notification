@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container bg-light">
+  
+
+<div th:replace="fragments/header :: header('newProj')"></div>
+    <div class="row">
+        <div class="d-flex justify-content-center">
+        <div class="card bg-light my-4" style="width: 600px;">
+            <div class="card-header">
+                <h3 class="m-0">Leave</h3>
+            </div>
+            <div class="card-body">
+                <form th:object="${project}" th:action="@{/project}" method="post">
+                    <input type="hidden" th:field="*{id}" class="form-control"/>
+
+                      <div class="form-group">
+                       <label  class="form-label">Leave Type  :</label>
+                    <select id="newEmployes" th:field="*{newEmployes}" size="10" multiple="multiple">
+				     <option th:each="emp : ${benchEmps}"
+						th:value="${{emp.id}}"
+						th:text="${emp.firstName}"> 
+					</option>
+			        </select>
+			        </div>
+      
+                    <div class="form-group">
+                        <label  class="form-label">Start Date:</label>
+                        <input  type="date"  th:field="*{startDate}"  class="form-control"/>
+                        <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
+                    </div>
+                    
+                     <div class="form-group">
+                        <label  class="form-label">End Date:</label>
+                        <input  type="date" th:field="*{endDate}" class="form-control"/>
+                        <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
+                    </div>
+                      <div class="form-group">
+                       <label  class="form-label">Approval :</label>
+                    <select id="newEmployes" th:field="*{newEmployes}" size="10" multiple="multiple">
+				     <option th:each="emp : ${benchEmps}"
+						th:value="${{emp.id}}"
+						th:text="${emp.firstName}"> 
+					</option>
+			        </select>
+			        </div>
+			       <div class="form-group">
+                        <label  class="form-label">Description:</label>
+                        <input type="text" th:field="*{projectDescription}" class="form-control"/>
+                        <p th:if="${#fields.hasErrors('projectDescription')}" th:errors="*{projectDescription}"></p>
+                    </div>
+
+                        <button type="submit" class="btn btn-success my-2 mx-auto text-center">Submit</button>
+
+                </form>
+            </div>
+        </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+</body>
+</html>

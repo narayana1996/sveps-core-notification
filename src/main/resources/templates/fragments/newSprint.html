@@ -1,0 +1,51 @@
+<!-- Modal -->
+<div class="modal fade" id="create_sprint_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sprint</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+                <form th:object="${sprint}" th:action="@{/sprints}" method="post">
+                    <input type="hidden" th:field="*{id}" class="form-control"/>
+                     <div class="form-group">
+                        <label class="form-label"> Name:  </label>
+                        <input type="text" th:field="*{name}" class="form-control" th:required="required"/>
+                        <p th:if="${#fields.hasErrors('name')}" th:errors="*{projectName}"></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label  class="form-label">Start Date:</label>
+                        <input  type="date"  th:field="*{startDate}"  class="form-control" th:required="required"/>
+                        <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
+                    </div>
+                    
+                     <div class="form-group">
+                        <label  class="form-label">End Date:</label>
+                        <input  type="date" th:field="*{endDate}" class="form-control" th:required="required"/>
+                        <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></p>
+                    </div>
+                    
+                  <div class="form-group">
+                       <label  class="form-label">Assign Project:</label>
+                    <select id="projectId" th:field="*{project.id}" th:required="required">
+                     <option value="">select</option>
+				     <option th:each="project : ${projects}"
+						th:value="${{project.id}}"
+						th:text="${project.projectName}"
+						 th:selected="${project.id == projectId}"
+						> 
+					</option>
+			        </select>
+			     </div>                   
+
+
+                        <button type="submit" class="btn btn-success my-2 mx-auto text-center">Submit</button>
+
+                </form>
+      </div>
+
+    </div>
+  </div>
+</div>

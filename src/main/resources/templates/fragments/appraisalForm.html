@@ -1,0 +1,30 @@
+<!-- Modal -->
+<div class="modal fade" id="create_Apprials_model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Appraisal Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+                <form th:object="${appraisal}" th:action="@{/appraisal}" method="post">
+                    <input type="hidden" th:field="*{id}" class="form-control"/>
+
+                    
+                 <div class="form-group">
+                        <label class="form-label"> Goals Achived:  </label>
+                       <textarea rows="5" type="textarea" th:field="*{goal}" class="form-control" th:required="required"></textarea>
+                        <p th:if="${#fields.hasErrors('goal')}" th:errors="*{goal}"></p>
+                    </div>
+                    
+
+
+
+                        <button type="submit" class="form-control btn btn-success my-2 mx-auto text-center">Submit</button>
+
+                </form>
+      </div>
+
+    </div>
+  </div>
+</div>

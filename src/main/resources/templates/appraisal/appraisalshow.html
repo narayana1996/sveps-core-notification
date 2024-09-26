@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container">
+ <div th:replace="fragments/header :: header('newAppraisa')"></div>
+ <div th:replace="fragments/submitAppraisalReview"></div>
+    <div class="row">
+    
+    
+    
+                <div class="card bg-light my-4" >
+                <div class="card-header">
+                    <h3 class="m-0">Appriasl Details</h3>
+
+                </div>
+                <div class="card-body">
+                 <div class="row  align-self-center">
+                    <div class="col">
+                        <label class="fw-bold">Request ID :</label>
+                        <span th:text="${appraisal.id}"></span>
+                    </div>
+                 <div class="col">
+                         <label class="fw-bold">Requested Employee :</label> <span th:text="${appraisal?.employee?.firstName}"></span>
+                    </div>
+                     <div class="col">
+                         <label  class="fw-bold">Appraisal Status :</label> <span  class="font-weight-bold" th:text="${appraisal?.status.status}"></span>
+                    </div>
+                    </div>
+                    <br/>
+                  
+               <div class="row">
+                    <div class="col">
+                        <label class="fw-bold">Goal :</label>
+                        <span th:text="${appraisal?.goal}"></span>
+                    </div>
+                </div>
+                     <br/>
+
+                 
+                    <div class="row">
+                        <div class="col">
+                         <label  class="fw-bold">Tasks Assigned :</label> <span  class="font-weight-bold" th:text="${allTasks}"></span>
+                    </div>
+                                            <div class="col">
+                         <label  class="fw-bold">Tasks Completed :</label> <span  class="font-weight-bold" th:text="${tasksCompleted}"></span>
+                    </div>
+                    <div class="col">
+                         <label  class="fw-bold">Avergae of Task Rating :</label> <span  class="font-weight-bold" th:text="${ratingAverage}"></span>
+                    </div>
+                                      
+                    </div>
+                     <br/>
+                 <div class="row" th:if="${appraisal?.feedback != null}">
+                        <div class="col">
+                         <label  class="fw-bold">Appraisal Feedback :</label> <span  class="font-weight-bold" th:text="${appraisal?.feedback}"></span>
+                    </div>
+                    <div class="col">
+                         <label  class="fw-bold">Appraisal Rating :</label> <span  class="font-weight-bold" th:text="${appraisal?.rating}"></span>
+                    </div>
+                    </div>
+                                                
+                        <div class="row">
+                        <div class="col" th:if="${(userDetails.id == appraisal?.reportingManager.id) && appraisal?.feedback == null }">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_submitAppraisalReview_model"> Update Task</button>
+                       </div>
+                    
+                       </div>
+                       
+                       
+                    </div>
+                    
+                   
+                </div>
+
+    </div>
+
+    <div class="row">
+ <div class="d-flex justify-content-center">
+ 
+ <div class="card-body">
+
+                <table class="table table-striped bg-light">
+                    <thead>
+                    <tr>
+                       
+                        <th>Appraisal Id</th>
+                        <th>Project Name</th>
+                        <th>Lead Name</th>
+                         <th>Lead Feedback</th>
+                           <th>Lead rating</th>
+                         <th>Status</th>
+                          <th>Action</th>
+                       
+                    </tr>
+                </thead>
+                    <tbody>
+
+                    <tr th:each="appraisalApproval : ${appraisal?.appraisalApprovalList}">
+                        <td th:text="${appraisalApproval.id}" ></td>
+
+                        <td> <a th:text="${appraisalApproval?.projectId?.projectName}" th:href="${'/project	/' + appraisalApproval?.projectId?.id}">pro Id</a></td>
+                         
+                           <td> <a th:text="${appraisalApproval?.projectId?.leadId.firstName}" th:href="${'/employee/' + appraisalApproval?.projectId?.leadId}">pro Id</a></td>
+                    <td th:text="${appraisalApproval?.feedback}">status</td>
+                     <td th:text="${appraisalApproval?.rating}">status</td>
+                           <td th:text="${appraisalApproval?.status.status}">status</td>
+
+                     <td  th:if="${(userDetails.id == appraisalApproval?.approverId?.id) && (#strings.equals(appraisalApproval?.appraisalRequest?.status,T(com.asp.utils.AppraisalStatus).WAITITNG_FOR_LEAD_FEEDBACK))}">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" th:attr="data-bs-appReqId=${appraisalApproval.id}"  data-bs-target="#create_submitAppraisalReview_model"> Update </button>
+                     
+                      <div data-bs-appReqId="${appraisalApproval.id}">
+        <!-- Your content here -->
+    </div>
+                       </td>
+                        
+                         
+                         </tr>
+
+                    </tbody>
+                    
+                </table>
+                  <a class="m-0 text-red" href="/appraisal">Back to Appraisal Dasboard</a>
+                 
+ 
+   </div>
+   
+
+    </div>
+    </div>
+
+    
+</div>
+</body>
+</html>

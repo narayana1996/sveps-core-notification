@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container bg-light">
+ <div th:replace="fragments/header::header('Home')"></div>
+
+    <div class="row" >
+        <div class="card bg-secondary my-2">
+            <div class="card-header">
+               <h1 class="m-0 text-white">List of Requests
+                    </h1>
+                
+            </div>
+        
+            <div class="card-body">
+                <table class="table table-striped bg-light">
+                    <thead>
+                    <tr>
+                        <th>Leave reqest Id</th>
+                        <th>Employe Name</th>
+                        <th>Reason</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Number of Days Requested</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                   
+                    </tr>
+                </thead>
+                    <tbody>
+  
+                            <tr th:each="leaveRequestIn : ${leaveRequestForApprovals}">
+                        <td ><a th:text="${leaveRequestIn.leaveRequest.id}" th:href="${'/leave/' + leaveRequestIn.leaveRequest.id}">Sprint Id</a></td>
+                        <td th:text="${leaveRequestIn.leaveRequest.employee.firstName}">name</td>
+                         <td th:text="${leaveRequestIn.leaveRequest.reason}">reason</td>                           
+                        <td th:text="${leaveRequestIn.leaveRequest.startDate}">Start Date</td>
+                        <td th:text="${leaveRequestIn.leaveRequest.endDate}">End Date</td>
+                         <td th:text="${leaveRequestIn.leaveRequest.numberOfDaysRequested}">numberOfDaysRequested</td>
+                       <td th:text="${leaveRequestIn.leaveRequest.status}">status</td>
+                  
+                        <td>
+                     
+                        <a th:text="APPROVED" th:href="${'/leave/approveLeavesRequests/' + leaveRequestIn.id+'/approve'}">Approval Id</a> 
+                        | 
+                        <a th:text="REJECTED" th:href="${'/leave/approveLeavesRequests/' + leaveRequestIn.id+'/reject'}">Approval Id</a>
+                        </td> 
+
+                  </tr> 
+                  
+
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    </div>
+</div>
+</body>
+</html>

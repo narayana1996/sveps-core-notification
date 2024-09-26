@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<header th:replace="fragments/main_header"></header>
+<body>
+<div class="container bg-light">
+ <div th:replace="fragments/header::header('newEmp')"></div>
+    <div class="row" >
+
+        <div class="card bg-secondary my-2">
+            <div class="card-header">
+               <h1 class="m-0 text-white">Employee List</h1>
+                    <a class="btn btn-primary" role="button" th:if="${userDetails.accessId == 2 || userDetails.accessId ==1}"  href="/employee/new"> Add Employee</a>
+                       
+            </div>
+            <div class="card-body">
+                <table class="table table-striped bg-light">
+                    <thead>
+                    <tr>
+                        <th>Employee Id</th>
+                        <th>Name</th>
+                        <th>Designation</th>
+                        <th>Email</th>
+                         <th>Reporting Manager</th>
+                      
+                        <th>Edit</th>
+
+                    </tr>
+                </thead>
+                    <tbody>
+
+                    <tr th:each="employee : ${employees}">
+                        <td ><a th:text="${employee.id}" th:href="${'/employee/' + employee.id}">Employee Id</a></td>
+                        <td th:text="${employee.firstName +' ' + employee.lastName } "> Name</td>
+                        <td th:text="${employee.designation.name}">Designation</td>
+                        <td th:text="${employee.email}">email</td>
+                         <td >
+                            <a  th:text="${employee.manager ne null } ? (${employee?.manager?.firstName} +' '+${employee?.manager?.lastName}) : ''" 
+                              th:href="${'/employee/' + employee?.manager?.id}">View</a>
+                           </td>
+                      
+                          <td ><a  th:href="${'/employee/edit/' + employee.id}">Edit</a></td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+    </div>
+    </div>
+</div>
+</body>
+</html>

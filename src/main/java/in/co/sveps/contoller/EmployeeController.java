@@ -187,17 +187,15 @@ public class EmployeeController {
     }
 
     @PostMapping("/employees/update/{id}")
-    public String updateEmployee(@PathVariable ObjectId id, @ModelAttribute Employee employee,
-                                 @RequestParam List<String> newGroup) {
-        // Set the employee ID
-        employee.setId(id);
-
-        // Fetch and set the groups
-        employee.setGroups(newGroup);
-
-        // Update employee in database
-        employeeService.updateEmployee(employee);
-        return "redirect:/employees"; // Redirect to the employee list or another view
+    public String updateEmployee(@PathVariable("id") ObjectId id,
+                                 @RequestParam("firstName") String firstName,
+                                 @RequestParam("lastName") String lastName,
+                                 @RequestParam("email") String email,
+                                 @RequestParam("phone") String phone,
+                                 @RequestParam(value = "newGroups", required = false) List<String> newGroupNames, // New group is optional
+                                 Model model) {
+        employeeService.updateEmployeeFields(id, firstName, lastName, email, phone, newGroupNames);
+        return "redirect:/employees";
     }
     
     

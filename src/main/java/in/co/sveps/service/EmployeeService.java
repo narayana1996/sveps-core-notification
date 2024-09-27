@@ -8,10 +8,12 @@ import in.co.sveps.repo.EmployeeRepository;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -27,6 +29,7 @@ public class EmployeeService {
 
 	@Autowired
 	private CustomPasswordEncoder passwordEncoder;
+
 
 	
 
@@ -56,13 +59,38 @@ public class EmployeeService {
 	}
 
 	public Employee findById(ObjectId id) {
-		return employeeRepository.findById(id).orElseThrow();
+		return employeeRepository.findById(id).orElseThrow(() ->new RuntimeException());
 	}
 
-	public void updateEmployee(Employee employee) {
-	}
 
 	public List<Group> getGroupsByIds(List<String> groupIds) {
 		return groupService.findAllByIds(groupIds);
+	}
+
+	public void updateEmployeeFields(ObjectId id, String firstName, String lastName, String email, String phone, List<String> newGroupNames) {
+		Employee employee = findById(id);
+
+		// Get the employee's current groups
+		List<String> existingGroups = employee.getGroups();
+
+		// Merge the existing and new groups (use a Set to avoid duplicates)
+		Set<String> combinedGroups = new HashSet<>();
+		if (existingGroups != null) {
+			combinedGroups.addAll(existingGroups);  // Add existing groups
+		}
+		if (newGroupNames != null) {
+			combinedGroups.addAll(newGroupNames);  // Add new groups
+		}
+
+		List<String> combinedGroupsList = new ArrayList<>(combinedGroups);
+		// Update the employee's fields
+		employee.setFirstName(firstName);
+		employee.setLastName(lastName);
+		employee.setEmail(email);
+		employee.setPhone(phone);
+		employee.setGroups(combinedGroupsList);  // Convert the set back to a list
+
+		// Save the updated employee back to the repository
+		employeeRepository.save(employee);
 	}
 }

@@ -8,10 +8,11 @@ import in.co.sveps.repo.EmployeeRepository;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.*;
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
@@ -27,6 +28,7 @@ public class EmployeeService {
 
 	@Autowired
 	private CustomPasswordEncoder passwordEncoder;
+
 
 	
 
@@ -56,13 +58,33 @@ public class EmployeeService {
 	}
 
 	public Employee findById(ObjectId id) {
-		return employeeRepository.findById(id).orElseThrow();
+		return employeeRepository.findById(id).orElseThrow(() ->new RuntimeException());
 	}
 
-	public void updateEmployee(Employee employee) {
-	}
 
 	public List<Group> getGroupsByIds(List<String> groupIds) {
 		return groupService.findAllByIds(groupIds);
+	}
+
+	public void updateEmployeeFields(ObjectId id, Employee updatedEmployee, List<String> newGroupNames) {
+		Employee employee = findById(id);
+
+		// Get the employee's current groups
+		List<String> existingGroups = employee.getGroups();
+
+		// Merge the existing and new groups (use a Set to avoid duplicates)
+		Set<String> combinedGroups = Optional.ofNullable(employee.getGroups())
+				.map(HashSet::new) // Convert existing list to a set
+				.orElseGet(HashSet::new); // Create a new set if null
+
+		Optional.ofNullable(newGroupNames)
+				.ifPresent(combinedGroups::addAll); // Add new group names if not null
+
+
+		List<String> combinedGroupsList = new ArrayList<>(combinedGroups);
+		updatedEmployee.setGroups(combinedGroupsList);   // Convert the set back to a list
+
+		// Save the updated employee back to the repository
+		employeeRepository.save(updatedEmployee);
 	}
 }

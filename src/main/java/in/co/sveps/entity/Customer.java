@@ -33,11 +33,9 @@ public class Customer {
 
     private List<Address> branchAddress;
 
-    // One-to-Many relationship using @DBRef for customer employees
     @DBRef
     private List<CustomerEmployee> employees;
 
-    // Getters and Setters
-    // ...
+
 }
 

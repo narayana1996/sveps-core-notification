@@ -5,7 +5,7 @@ import in.co.sveps.validators.PasswordMatches;
 import lombok.Data;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 
@@ -19,19 +19,20 @@ public class Employee {
     @Id
     private ObjectId id;
 
-   @NotBlank
+    @NotBlank
     private String firstName;
-   @NotBlank
+    @NotBlank
     private String lastName;
     @NotBlank
     @Email
     private String email;
-    
-     @Pattern(regexp = "\\d{10}$", message = "Phone number must be 10 digits")
-     private String phone;
+
+    @Pattern(regexp = "\\d{10}$", message = "Phone number must be 10 digits")
+    private String phone;
     @NotBlank
     @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
+    @Transient
     @NotBlank
     private String cpassword;
     private String pUUID;
@@ -40,8 +41,8 @@ public class Employee {
     private List<String> groups;
     private List<String> permissions;
 
-	//@DBRef
-	private AccessLevel accessLevel;
+    //@DBRef
+    private AccessLevel accessLevel;
 
 
 

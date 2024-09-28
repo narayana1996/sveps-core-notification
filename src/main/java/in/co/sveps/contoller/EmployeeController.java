@@ -42,7 +42,7 @@ public class EmployeeController {
      * @param model mapped to single employee
      * @return single employee page
      */
-    @GetMapping("view/{id}")
+    @GetMapping("/{id}")
     public String showEmployee(@PathVariable Integer id, Model model){
     	// getting the employee based on 'id'
     	// calling employeeservice to fetch the employee by gievn id from database
@@ -54,7 +54,7 @@ public class EmployeeController {
         return "employeeshow";
     }
 
-    @GetMapping("view/search")
+    @GetMapping("/employees")
     public String  viewEmployeesPage(Model model,
                                             @RequestParam(defaultValue = "0") int page,  // Default to first page
                                             @RequestParam(defaultValue = "5") int size  // Default page size to 5
@@ -98,5 +98,24 @@ public class EmployeeController {
         //display the employee form to update old employee
         return "employeeform";
     }
+
+
+    @GetMapping("/employees/{id}")
+    public String showUpdateForm(@PathVariable ObjectId id, Model model) {
+        Employee employee = employeeService.findById(id);
+        model.addAttribute("employee", employee);
+        model.addAttribute("groups", groupService.findAll());
+        return "employeeDetails"; // Ensure this matches your HTML filename
+    }
+
+    @PostMapping("/employees/update/{id}")
+    public String updateEmployee(@PathVariable("id") ObjectId id,
+                                 @ModelAttribute("employee") Employee employee,
+                                 @RequestParam(value = "newGroups", required = false) List<String> newGroupNames,
+                                 Model model) {
+        employeeService.updateEmployeeFields(id, employee, newGroupNames);
+        return "redirect:/employees";
+    }
+    
 
 }

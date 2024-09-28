@@ -29,16 +29,22 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
          Employee employee = employeeRepository.findByEmail(email).orElseThrow(() ->  new UsernameNotFoundException("User not found with username: " + email));
 
-        Set<GrantedAuthority> authorities = employee.getGroups().stream()
-                .map(groupRepository::findByName) // Map each group name to the corresponding Group object
-                .filter(Objects::nonNull) // Filter out null groups, just in case
-                .flatMap(group -> group.getPermissions().stream()) // Flatten the permissions from each group
-                .map(SimpleGrantedAuthority::new) // Convert each permission to a GrantedAuthority
-                .collect(Collectors.toSet()); // Collect the result into a List
+        Set<GrantedAuthority> authorities = Optional.ofNullable(employee.getGroups()) // Wrap the groups in an Optional
+                .orElseGet(Collections::emptyList) // If groups are null, use an empty list
+                .stream() // Create a stream from the list
+                .map(groupName -> Optional.ofNullable(groupRepository.findByName(groupName))) // Map to Optional<Group>
+                .filter(Optional::isPresent) // Filter out empty Optionals
+                .flatMap(groupOpt -> groupOpt.get().getPermissions().stream()) // Get permissions from each present group
+                .map(SimpleGrantedAuthority::new) // Convert permissions to GrantedAuthority
+                .collect(Collectors.toSet()); // Collect the result into a Set
+        // Collect the result into a List
 
-        List<GrantedAuthority> authorities2 = employee.getPermissions().stream()
+        List<GrantedAuthority> authorities2 = Optional.ofNullable(employee.getPermissions())
+                .orElse(Collections.emptyList()) // If null, use an empty list
+                .stream()
                 .map(SimpleGrantedAuthority::new) // Convert each permission into a SimpleGrantedAuthority
-                .collect(Collectors.toList()); // Collect into a List
+                .collect(Collectors.toList());
+
 
         authorities.addAll(authorities2);
 

@@ -30,13 +30,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+
+
+       http.csrf().disable()
             .authorizeRequests()
                  .antMatchers("/css/**").permitAll()
                  .antMatchers("/js/**").permitAll()
-                 //.antMatchers("/employee/new").hasAnyAuthority("ADMIN","MANAGER")
-                 //.antMatchers("/employee/edit/**").hasAnyAuthority("ADMIN","MANAGER")
-                 //.antMatchers(HttpMethod.POST,"/employee/").hasAnyAuthority("ADMIN","MANAGER")
                 .antMatchers("/").hasAnyAuthority("dashboard")
                  .antMatchers("/project/new").hasAnyAuthority("ADMIN","MANAGER")
                  .antMatchers(HttpMethod.POST,"/project/").hasAnyAuthority("ADMIN","MANAGER")
@@ -46,8 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/reset-password-conform").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/employee").permitAll()
+               .antMatchers("/user/**").permitAll()
                 .antMatchers("/register").permitAll()
-                .anyRequest()
+                .antMatchers("/api/v1/customer/**").permitAll()
+               .antMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+
+               .anyRequest()
                 .authenticated()
                 .and()
              .exceptionHandling()
@@ -56,8 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/")
-                .successForwardUrl("/")
+                .successForwardUrl("/dashboard")
                 .permitAll()
                 .and()
             .logout()
@@ -65,7 +67,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login?logout=true")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .permitAll();
+                .permitAll()
+               .and()
+
+               // Enable basic authentication for APIs
+               .httpBasic();
               
     }
 

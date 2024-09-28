@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/main_header">
-<!--  <meta charset="UTF-8">-->
-<!--  <title>Employee Management</title>-->
-<!--  &lt;!&ndash; Add Bootstrap CSS &ndash;&gt;-->
-<!--  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">-->
+
 </head>
 <body>
 
@@ -18,7 +15,7 @@
       <h3>Employee List</h3>
     </div>
     <div class="card-body">
-      <table class="table table-striped">
+      <table class="table table-striped" id="user_table">
         <thead>
         <tr>
           <th>First Name</th>
@@ -35,9 +32,9 @@
           <td th:text="${employee.email}"></td>
           <td th:text="${employee.phone}"></td>
           <td>
-            <a th:href="@{/employees/{id}(id=${employee.id})}" class="btn btn-warning">Grant Access/Edit</a>
-            <a th:href="@{/employee/delete/{id}(id=${employee.id})}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
-            <a th:href="@{/}" class="btn btn-success">Dashboard</a>
+            <a th:href="@{{id}(id=${employee.id})}" class="btn btn-warning">Grant Access/Edit</a>
+            <a th:href="@{view/{id}(id=${employee.id})}" class="btn btn-success" >View</a>
+
           </td>
         </tr>
         </tbody>
@@ -56,7 +53,6 @@
   </div>
 </div>
 
-<!-- Add Bootstrap JS -->
-<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<head th:replace="fragments/footer_import">
 </body>
 </html>

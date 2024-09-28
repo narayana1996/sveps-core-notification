@@ -43,7 +43,7 @@ private EmployeeService employeeService;
   }
   
 
-	@RequestMapping("/dashboardView")
+	@RequestMapping("/")
 	public String dashBoard(Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

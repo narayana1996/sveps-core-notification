@@ -22,7 +22,7 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("/api/v1/user/")
+@RequestMapping("/user/")
 public class EmployeeController {
 
 
@@ -42,19 +42,13 @@ public class EmployeeController {
      * @param model mapped to single employee
      * @return single employee page
      */
-    @GetMapping("/{id}")
+    @GetMapping("view/{id}")
     public String showEmployee(@PathVariable Integer id, Model model){
-    	// getting the employee based on 'id'
-    	// calling employeeservice to fetch the employee by gievn id from database
-    	// Employee employeeById = employeeService.getEmployeeById(id);
-    	
-    	//setting employee details  in model, to display in ui 
-       // model.addAttribute("employee",employeeById);
-      //redirecting the request  from dashboard creation form to employeeshow
+
         return "employeeshow";
     }
 
-    @GetMapping("/employees")
+    @GetMapping("all")
     public String  viewEmployeesPage(Model model,
                                             @RequestParam(defaultValue = "0") int page,  // Default to first page
                                             @RequestParam(defaultValue = "5") int size  // Default page size to 5
@@ -75,32 +69,8 @@ public class EmployeeController {
      * @param model mapped to a single employee
      * @return employeeform.html page
      */
-    @RequestMapping("/edit/{id}")
-    public String edit(@PathVariable Integer id, Model model){
-    	
-     	// list of employes to display the reporting manager Info
-    	//List<Employee> findAllEmployees =
-    	//		employeeService.findAllEmployees();
 
-        	
-     	// list of access to active projects
-    	//List<Project> findActiveProjects = projectService.findActiveProjects();
-    	
-    	// calling employeeservice to fetch the employee by gievn id from database
-    //	Employee employeeById = employeeService.getEmployeeById(id);
-    	
-    	//setting values in model 
-       // model.addAttribute("employee", employeeById);
-        //model.addAttribute("employeeList", findAllEmployees);
-
-        //model.addAttribute("projects", findActiveProjects);
-        
-        //display the employee form to update old employee
-        return "employeeform";
-    }
-
-
-    @GetMapping("/employees/{id}")
+    @GetMapping("{id}")
     public String showUpdateForm(@PathVariable ObjectId id, Model model) {
         Employee employee = employeeService.findById(id);
         model.addAttribute("employee", employee);
@@ -108,13 +78,13 @@ public class EmployeeController {
         return "employeeDetails"; // Ensure this matches your HTML filename
     }
 
-    @PostMapping("/employees/update/{id}")
+    @PostMapping("update/{id}")
     public String updateEmployee(@PathVariable("id") ObjectId id,
                                  @ModelAttribute("employee") Employee employee,
                                  @RequestParam(value = "newGroups", required = false) List<String> newGroupNames,
                                  Model model) {
         employeeService.updateEmployeeFields(id, employee, newGroupNames);
-        return "redirect:/employees";
+        return "redirect:../all";
     }
     
 

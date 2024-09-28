@@ -8,10 +8,9 @@ import in.co.sveps.repo.EmployeeRepository;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
+import java.util.*;
+
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
@@ -67,30 +66,25 @@ public class EmployeeService {
 		return groupService.findAllByIds(groupIds);
 	}
 
-	public void updateEmployeeFields(ObjectId id, String firstName, String lastName, String email, String phone, List<String> newGroupNames) {
+	public void updateEmployeeFields(ObjectId id, Employee updatedEmployee, List<String> newGroupNames) {
 		Employee employee = findById(id);
 
 		// Get the employee's current groups
 		List<String> existingGroups = employee.getGroups();
 
 		// Merge the existing and new groups (use a Set to avoid duplicates)
-		Set<String> combinedGroups = new HashSet<>();
-		if (existingGroups != null) {
-			combinedGroups.addAll(existingGroups);  // Add existing groups
-		}
-		if (newGroupNames != null) {
-			combinedGroups.addAll(newGroupNames);  // Add new groups
-		}
+		Set<String> combinedGroups = Optional.ofNullable(employee.getGroups())
+				.map(HashSet::new) // Convert existing list to a set
+				.orElseGet(HashSet::new); // Create a new set if null
+
+		Optional.ofNullable(newGroupNames)
+				.ifPresent(combinedGroups::addAll); // Add new group names if not null
+
 
 		List<String> combinedGroupsList = new ArrayList<>(combinedGroups);
-		// Update the employee's fields
-		employee.setFirstName(firstName);
-		employee.setLastName(lastName);
-		employee.setEmail(email);
-		employee.setPhone(phone);
-		employee.setGroups(combinedGroupsList);  // Convert the set back to a list
+		updatedEmployee.setGroups(combinedGroupsList);   // Convert the set back to a list
 
 		// Save the updated employee back to the repository
-		employeeRepository.save(employee);
+		employeeRepository.save(updatedEmployee);
 	}
 }

@@ -188,13 +188,10 @@ public class EmployeeController {
 
     @PostMapping("/employees/update/{id}")
     public String updateEmployee(@PathVariable("id") ObjectId id,
-                                 @RequestParam("firstName") String firstName,
-                                 @RequestParam("lastName") String lastName,
-                                 @RequestParam("email") String email,
-                                 @RequestParam("phone") String phone,
-                                 @RequestParam(value = "newGroups", required = false) List<String> newGroupNames, // New group is optional
+                                 @ModelAttribute("employee") Employee employee,
+                                 @RequestParam(value = "newGroups", required = false) List<String> newGroupNames,
                                  Model model) {
-        employeeService.updateEmployeeFields(id, firstName, lastName, email, phone, newGroupNames);
+        employeeService.updateEmployeeFields(id, employee, newGroupNames);
         return "redirect:/employees";
     }
     
